@@ -1,0 +1,25 @@
+.navbar {
+  background: var(--secondary-blue);
+}
+
+#myBrand {
+  font-family: "Zen Dots", serif;
+    width: 50px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.brand-container {
+  display: flex;
+  align-items: center; 
+}
+
+
+#navbarLinks a {
+  font-family: "Inter", sans-serif;
+  color: var(--neutral-light);
+}
+
+#navbarLinks a:hover {
+  color: var(--highlight-accent);
+}
