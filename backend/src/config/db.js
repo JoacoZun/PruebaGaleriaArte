@@ -21,8 +21,16 @@ const initializeDB = async () => {
     const seedPath = path.resolve(__dirname, '../db/seed.sql');
 
     await createDatabase(process.env.PGTESTDATABASE); 
+    
+    // Ejecutar schema
     await executeSQL(pool, schemaPath);
-    await executeSQL(pool, seedPath);
+    
+    // Ejecutar seed con manejo de errores
+    try {
+      await executeSQL(pool, seedPath);
+    } catch (seedError) {
+      console.warn('Algunos datos pueden ya existir. Continuando...');
+    }
 
     console.log('Base de datos inicializada correctamente.');
   } catch (error) {

@@ -121,6 +121,7 @@ VALUES
     50,
     70
   );
+  ON CONFLICT (nombre, autor) DO NOTHING;
 
 INSERT INTO
   users (
@@ -151,3 +152,5 @@ VALUES
     '+56988888888',
     'Calle falsa 123'
   );
+
+  ON CONFLICT (email) DO NOTHING;
