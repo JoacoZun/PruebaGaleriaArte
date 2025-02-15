@@ -1,17 +1,3 @@
-
-CREATE TABLE IF NOT EXISTS users (
-  id SERIAL PRIMARY KEY,
-  email VARCHAR(255) NOT NULL UNIQUE,
-  password VARCHAR(255) NOT NULL,
-  rol VARCHAR(50) DEFAULT 'cliente',
-  nombre VARCHAR(50) NOT NULL,
-  apellido VARCHAR(50) NOT NULL,
-  telefono VARCHAR(20),
-  direccion TEXT,
-  created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW()
-);
-
 CREATE TABLE IF NOT EXISTS obras (
   id SERIAL PRIMARY KEY,
   estado VARCHAR(20) NOT NULL DEFAULT 'disponible',
@@ -24,6 +10,20 @@ CREATE TABLE IF NOT EXISTS obras (
   tecnica VARCHAR(255),
   alto SMALLINT,
   ancho SMALLINT,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW(),
+  UNIQUE(nombre, autor)  -- Añade esta línea
+);
+
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  email VARCHAR(255) NOT NULL UNIQUE,  -- Asegúrate de que esta línea esté presente
+  password VARCHAR(255) NOT NULL,
+  rol VARCHAR(50) DEFAULT 'cliente',
+  nombre VARCHAR(50) NOT NULL,
+  apellido VARCHAR(50) NOT NULL,
+  telefono VARCHAR(20),
+  direccion TEXT,
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
 );

@@ -26,9 +26,11 @@ const executeSQL = async (pool, path) => {
           case '23505': // Duplicado de clave única
             console.warn(`Conflicto en inserción: ${statementError.detail}`);
             break;
-          case '42601': // Error de sintaxis
-            console.error(`Error de sintaxis en SQL: ${statementError.message}`);
-            console.error('Statement:', statement);
+          case '42P10': // No hay restricción única para ON CONFLICT
+            console.warn(`No hay restricción única para ON CONFLICT: ${statementError.message}`);
+            break;
+          case '25P02': // Transacción abortada
+            console.warn(`Transacción abortada: ${statementError.message}`);
             break;
           default:
             console.error('Error desconocido:', statementError);
