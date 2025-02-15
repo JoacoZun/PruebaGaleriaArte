@@ -1,5 +1,4 @@
 const fs = require('node:fs/promises');
-
 const executeSQL = async (pool, path) => {
   const client = await pool.connect();
   try {
@@ -19,10 +18,13 @@ const executeSQL = async (pool, path) => {
         await client.query(statement);
       } catch (statementError) {
         // Manejo específico de errores
-        if (statementError.code === '23505') {
+        if (statementError.code === '42P07') {
+          // Tabla ya existe - ignorar
+          console.warn(`Tabla ya existe: ${statementError.message}`);
+          continue;
+        } else if (statementError.code === '23505') {
           // Duplicado de clave única
           console.warn(`Conflicto en inserción: ${statementError.detail}`);
-          // Continúa con la siguiente consulta
           continue;
         } else {
           // Otros errores se lanzan
