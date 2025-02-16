@@ -39,6 +39,7 @@ const AuthProvider = ({ children }) => {
         apellido: data.apellido,
         email: data.email,
         rol: data.rol,
+        direccion: data.direccion,
       });
     } catch (error) {
       console.error("Error en login:", error.message);
