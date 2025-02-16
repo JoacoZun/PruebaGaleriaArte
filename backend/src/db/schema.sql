@@ -1,4 +1,9 @@
-CREATE TABLE users (
+DROP TABLE IF EXISTS orders_obra CASCADE;
+DROP TABLE IF EXISTS orders CASCADE;
+DROP TABLE IF EXISTS obras CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+
+CREATE TABLE IF NOT EXISTS users (
   id SERIAL PRIMARY KEY,
   email VARCHAR(255) NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL,
@@ -11,7 +16,7 @@ CREATE TABLE users (
   updated_at TIMESTAMP DEFAULT NOW()
 );
 
-CREATE TABLE obras (
+CREATE TABLE IF NOT EXISTS obras (
   id SERIAL PRIMARY KEY,
   estado VARCHAR(20) NOT NULL DEFAULT 'disponible',
   nombre VARCHAR(255) NOT NULL,
@@ -27,7 +32,7 @@ CREATE TABLE obras (
   updated_at TIMESTAMP DEFAULT NOW()
 );
 
-CREATE TABLE orders (
+CREATE TABLE IF NOT EXISTS orders (
   id SERIAL PRIMARY KEY,
   user_id INTEGER,
   estado VARCHAR DEFAULT 'pendiente',
@@ -35,13 +40,13 @@ CREATE TABLE orders (
   direccion TEXT,
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW(),
-  CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (id)
+  CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
-CREATE TABLE orders_obra (
+CREATE TABLE IF NOT EXISTS orders_obra (
   id SERIAL PRIMARY KEY,
   order_id INTEGER,
   obra_id INTEGER,
-  CONSTRAINT fk_order FOREIGN KEY (order_id) REFERENCES orders (id),
-  CONSTRAINT fk_obra FOREIGN KEY (obra_id) REFERENCES obras (id)
+  CONSTRAINT fk_order FOREIGN KEY (order_id) REFERENCES orders (id) ON DELETE CASCADE,
+  CONSTRAINT fk_obra FOREIGN KEY (obra_id) REFERENCES obras (id) ON DELETE CASCADE
 );
