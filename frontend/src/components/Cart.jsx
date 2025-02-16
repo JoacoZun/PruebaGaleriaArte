@@ -29,7 +29,6 @@ const Cart = () => {
         body: JSON.stringify(order),
       });
       dispatch({ type: 'CLEAR_CART' });
-      console.log(response);
     } catch (error) {
       console.log(error);
     }

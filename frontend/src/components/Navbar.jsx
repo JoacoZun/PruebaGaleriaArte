@@ -47,6 +47,9 @@ const Navbar = () => {
                 <Link className="nav-link" to="/profile">
                   Perfil
                 </Link>
+                <Link className="nav-link" to="/orders">
+                  Mis compras
+                </Link>
                 <button className="btn btn-link nav-link" onClick={logout}>
                   Logout
                 </button>
