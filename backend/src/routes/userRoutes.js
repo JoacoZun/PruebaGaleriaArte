@@ -13,3 +13,4 @@ router.put('/me', authenticateToken, updateUser);
 
 module.exports = router;
 
+console.log("loginUser en userRoutes:", loginUser);

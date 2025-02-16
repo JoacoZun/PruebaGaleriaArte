@@ -2,6 +2,11 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User"); // Asegúrate de que la ruta es correcta
 
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const User = require("../models/User"); // Asegúrate de que la ruta es correcta
+
+// ✅ SOLO UNA DEFINICIÓN de loginUser
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -30,33 +35,17 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-exports.loginUser = async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    if (!process.env.JWT_SECRET) {
-      console.error("⚠️ ERROR: JWT_SECRET no está definido en las variables de entorno.");
-      return res.status(500).json({ message: "Error interno del servidor: JWT no configurado." });
-    }
-
-    const user = await User.getByEmail(email);
-    if (!user) {
-      return res.status(400).json({ message: "Credenciales incorrectas" });
-    }
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: "Credenciales incorrectas" });
-    }
-
-    const token = jwt.sign({ email: user.email, rol: user.rol }, process.env.JWT_SECRET, { expiresIn: "1h" });
-
-    res.json({ message: "Inicio de sesión exitoso", token, nombre: user.nombre, apellido: user.apellido, email: user.email, rol: user.rol });
-  } catch (error) {
-    console.error("❌ Error en loginUser:", error);
-    res.status(500).json({ message: "Error al iniciar sesión" });
-  }
+// ✅ Exporta correctamente todas las funciones
+module.exports = {
+  loginUser,
+  getAllUsers,
+  getUserById,
+  getUser,
+  updateUser,
+  deleteUserById,
+  updateUserById,
 };
+
 // Obtener todos los usuarios
 exports.getAllUsers = async (req, res) => {
   try {
