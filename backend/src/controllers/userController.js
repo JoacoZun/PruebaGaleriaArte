@@ -2,47 +2,29 @@ exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Verificar si JWT_SECRET está definido
     if (!process.env.JWT_SECRET) {
       console.error("⚠️ ERROR: JWT_SECRET no está definido en las variables de entorno.");
       return res.status(500).json({ message: "Error interno del servidor: JWT no configurado." });
     }
 
-    // Buscar el usuario por email
     const user = await User.getByEmail(email);
     if (!user) {
       return res.status(400).json({ message: "Credenciales incorrectas" });
     }
 
-    // Verificar la contraseña
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Credenciales incorrectas" });
     }
 
-    // Generar el token JWT
-    const token = jwt.sign(
-      { email: user.email, rol: user.rol },
-      process.env.JWT_SECRET,
-      { expiresIn: "1h" }
-    );
+    const token = jwt.sign({ email: user.email, rol: user.rol }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
-    // Enviar la respuesta
-    res.json({
-      message: "Inicio de sesión exitoso",
-      token,
-      nombre: user.nombre,
-      apellido: user.apellido,
-      email: user.email,
-      rol: user.rol,
-    });
+    res.json({ message: "Inicio de sesión exitoso", token, nombre: user.nombre, apellido: user.apellido, email: user.email, rol: user.rol });
   } catch (error) {
     console.error("❌ Error en loginUser:", error);
     res.status(500).json({ message: "Error al iniciar sesión" });
   }
 };
-
-
 // Obtener todos los usuarios
 exports.getAllUsers = async (req, res) => {
   try {
