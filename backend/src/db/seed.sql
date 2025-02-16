@@ -1,15 +1,15 @@
--- Insertar obras con manejo de conflictos
-INSERT INTO obras (
-  nombre,
-  autor,
-  precio,
-  img_url,
-  descripcion,
-  categoria,
-  tecnica,
-  alto,
-  ancho
-)
+INSERT INTO
+  obras (
+    nombre,
+    autor,
+    precio,
+    img_url,
+    descripcion,
+    categoria,
+    tecnica,
+    alto,
+    ancho
+  )
 VALUES
   (
     'Reflejos del Alma',
@@ -120,19 +120,18 @@ VALUES
     'Acuarela y tinta sobre papel',
     50,
     70
-  )
-ON CONFLICT (nombre, autor) DO NOTHING;
+  );
 
--- Insertar usuarios con manejo de conflictos
-INSERT INTO users (
-  email,
-  password,
-  rol,
-  nombre,
-  apellido,
-  telefono,
-  direccion
-)
+INSERT INTO
+  users (
+    email,
+    password,
+    rol,
+    nombre,
+    apellido,
+    telefono,
+    direccion
+  )
 VALUES
   (
     'admin@mail.com',
@@ -151,5 +150,4 @@ VALUES
     'Pérez',
     '+56988888888',
     'Calle falsa 123'
-  )
-ON CONFLICT (email) DO NOTHING;
+  );

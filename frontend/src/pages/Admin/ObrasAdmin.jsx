@@ -19,7 +19,7 @@ const ObrasAdmin = () => {
 
   const fetchObras = async () => {
     try {
-      const data = await fetchWithAuth("http://localhost:3000/api/artworks");
+      const data = await fetchWithAuth(`${import.meta.env.VITE_API_URL}/api/artworks`);
       setObras(data);
     } catch (err) {
       setError(err.message);
@@ -31,7 +31,7 @@ const ObrasAdmin = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("¿Estás seguro de eliminar esta obra?")) return;
     try {
-      await fetchWithAuth(`http://localhost:3000/api/artworks/${id}`, {
+      await fetchWithAuth(`${import.meta.env.VITE_API_URL}/admin/artworks/${id}`, {
         method: "DELETE",
       });
       setObras(obras.filter((obra) => obra.id !== id));
@@ -69,8 +69,8 @@ const ObrasAdmin = () => {
     try {
       const response = await fetchWithAuth(
         obraEdit
-          ? `http://localhost:3000/api/artworks/${obraEdit.id}`
-          : "http://localhost:3000/api/artworks",
+          ? `${import.meta.env.VITE_API_URL}/admin/artworks/${obraEdit.id}`
+          : `${import.meta.env.VITE_API_URL}/admin/artworks`,
         {
           method: obraEdit ? "PUT" : "POST",
           headers: { "Content-Type": "application/json" },

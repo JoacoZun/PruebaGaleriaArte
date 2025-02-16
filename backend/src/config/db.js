@@ -1,19 +1,33 @@
 const { Pool } = require('pg');
+const path = require('node:path');
+const { executeSQL } = require('./executeSQL');
+const { createDatabase } = require('./createDatabase');
+require('dotenv').config();
+
+const isTestEnv = process.env.NODE_ENV === 'test';
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false // Necesario para Render
-  }
+  user: process.env.PGUSER,
+  host: process.env.PGHOST,
+  database: isTestEnv ? process.env.PGTESTDATABASE : process.env.PGDATABASE, 
+  password: process.env.PGPASSWORD,
+  port: process.env.PGPORT,
 });
 
 const initializeDB = async () => {
   try {
-    const client = await pool.connect();
-    console.log('✅ Conectado a la base de datos PostgreSQL en Render');
-    client.release();
+    console.log('Inicializando base de datos...');
+    const schemaPath = path.resolve(__dirname, '../db/schema.sql');
+    const seedPath = path.resolve(__dirname, '../db/seed.sql');
+
+    await createDatabase(process.env.PGTESTDATABASE); 
+    await executeSQL(pool, schemaPath);
+    await executeSQL(pool, seedPath);
+
+    console.log('Base de datos inicializada correctamente.');
   } catch (error) {
-    console.error('❌ Error al conectar con la base de datos:', error);
+    console.error('Error al inicializar la base de datos:', error);
+    throw error;
   }
 };
 

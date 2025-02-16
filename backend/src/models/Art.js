@@ -40,7 +40,7 @@ exports.deleteById = async (id) => {
 };
 
 exports.updateById = async ({
-  estado,
+  estado = 'disponible',
   nombre,
   autor,
   precio,

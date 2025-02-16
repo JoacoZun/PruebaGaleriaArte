@@ -15,7 +15,7 @@ exports.createUserOrder = async (req, res) => {
       precio_total,
       obras_id,
     });
-    res.json({
+    res.status(201).json({
       message: 'Orden de compra creada exitosamente',
       data: createdOrder,
     });
@@ -100,10 +100,10 @@ exports.updateOrder = async (req, res) => {
   const { estado } = req.body;
   try {
     const updatedOrder = await Order.updateById(orderId, estado);
-    return res.json({ data: updatedOrder });
+    return res.json({ message: 'Orden actualizada correctamente', data: updatedOrder });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: 'Error al actualiza la orden' });
+    return res.status(500).json({ message: 'Error al actualizar la orden' });
   }
 };
 

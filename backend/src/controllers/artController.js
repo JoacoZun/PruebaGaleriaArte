@@ -23,26 +23,39 @@ const getArtById = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 const createArt = async (req, res) => {
-  console.log("Datos recibidos en createArt:", req.body); 
-
-  const { nombre, autor, precio, img_url, descripcion, categoria, tecnica, alto, ancho } = req.body;
-
-  if (!nombre || !autor || !precio) {
-    console.log("⛔ Falta nombre, autor o precio"); 
-    return res.status(400).json({ error: "Faltan campos obligatorios" });
-  }
-
+  const {
+    nombre,
+    autor,
+    precio,
+    img_url,
+    descripcion,
+    categoria,
+    tecnica,
+    alto,
+    ancho,
+  } = req.body;
   try {
-    const newArt = await Art.create({ nombre, autor, precio, img_url, descripcion, categoria, tecnica, alto, ancho });
-    console.log("✅ Obra creada:", newArt);
-    res.status(201).json({ message: "Obra de arte creada exitosamente" });
+    const artwork = await Art.create({
+      nombre,
+      autor,
+      precio,
+      img_url,
+      descripcion,
+      categoria,
+      tecnica,
+      alto,
+      ancho,
+    });
+    res
+      .status(201)
+      .json({ message: 'Obra de arte creada exitosamente', data: artwork });
   } catch (error) {
-    console.error("🔥 Error en createArt:", error);
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ message: 'Error al agregar la obra' });
   }
 };
-
 
 const updateArt = async (req, res) => {
   const { id } = req.params;
@@ -74,6 +87,7 @@ const updateArt = async (req, res) => {
     });
     res.json({ message: 'Obra de arte actualizada exitosamente' });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -81,18 +95,15 @@ const updateArt = async (req, res) => {
 const deleteArt = async (req, res) => {
   const { id } = req.params;
   try {
-    await Art.deleteById(id);
-    res.json({ message: 'Obra de arte eliminada exitosamente' });
+    const deletedArt = await Art.deleteById(id);
+    res.json({
+      message: 'Obra de arte eliminada exitosamente',
+      data: deletedArt,
+    });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
 
-module.exports = { 
-  getAll: getAllArt,
-  getById: getArtById,
-  create: createArt,
-  updateById: updateArt,
-  deleteById: deleteArt
-};
-
+module.exports = { getAllArt, getArtById, createArt, updateArt, deleteArt };

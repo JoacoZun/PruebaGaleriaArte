@@ -1,4 +1,17 @@
-CREATE TABLE IF NOT EXISTS obras (
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  rol VARCHAR(50) DEFAULT 'cliente',
+  nombre VARCHAR(50) NOT NULL,
+  apellido VARCHAR(50) NOT NULL,
+  telefono VARCHAR(20),
+  direccion TEXT,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE obras (
   id SERIAL PRIMARY KEY,
   estado VARCHAR(20) NOT NULL DEFAULT 'disponible',
   nombre VARCHAR(255) NOT NULL,
@@ -11,24 +24,10 @@ CREATE TABLE IF NOT EXISTS obras (
   alto SMALLINT,
   ancho SMALLINT,
   created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW(),
-  UNIQUE(nombre, autor)  -- Añade esta línea
-);
-
-CREATE TABLE IF NOT EXISTS users (
-  id SERIAL PRIMARY KEY,
-  email VARCHAR(255) NOT NULL UNIQUE,  -- Asegúrate de que esta línea esté presente
-  password VARCHAR(255) NOT NULL,
-  rol VARCHAR(50) DEFAULT 'cliente',
-  nombre VARCHAR(50) NOT NULL,
-  apellido VARCHAR(50) NOT NULL,
-  telefono VARCHAR(20),
-  direccion TEXT,
-  created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS orders (
+CREATE TABLE orders (
   id SERIAL PRIMARY KEY,
   user_id INTEGER,
   estado VARCHAR DEFAULT 'pendiente',
@@ -39,7 +38,7 @@ CREATE TABLE IF NOT EXISTS orders (
   CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
-CREATE TABLE IF NOT EXISTS orders_obra (
+CREATE TABLE orders_obra (
   id SERIAL PRIMARY KEY,
   order_id INTEGER,
   obra_id INTEGER,

@@ -26,6 +26,12 @@ const options = {
       },
     ],
     paths: {},
+    tags: [
+      {
+        name: 'Admin',
+        description: 'Rutas de la API que requieren el rol de administrador',
+      },
+    ],
   },
   apis: [],
 };

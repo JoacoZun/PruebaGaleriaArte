@@ -6,7 +6,7 @@ const TablaObras = () => {
   const [obras, setObras] = useState([]);
 
   useEffect(() => {
-    fetchWithAuth("/api/obras")
+    fetchWithAuth(`${import.meta.env.VITE_API_URL/admin/artworks}`)
       .then((data) => setObras(data))
       .catch((error) => console.error("Error:", error));
   }, []);

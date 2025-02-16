@@ -14,11 +14,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Ruta raíz para verificar que el backend está corriendo
-app.get('/', (req, res) => {
-  res.send('🎨 API de Galería de Arte corriendo en Render 🚀');
-});
-
 // Rutas
 app.use('/admin', adminRoutes);
 app.use('/api/artworks', artRoutes);
@@ -27,10 +22,5 @@ app.use('/api/orders', orderRoutes);
 
 // Documentación Swagger
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
-
-// Manejo de rutas inexistentes
-app.use((req, res) => {
-  res.status(404).json({ error: '❌ Ruta no encontrada' });
-});
 
 module.exports = app;
