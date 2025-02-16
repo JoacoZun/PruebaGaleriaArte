@@ -2,11 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User"); // Asegúrate de que la ruta es correcta
 
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const User = require("../models/User"); // Asegúrate de que la ruta es correcta
-
-// ✅ SOLO UNA DEFINICIÓN de loginUser
+// Función para iniciar sesión
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -33,17 +29,6 @@ exports.loginUser = async (req, res) => {
     console.error("❌ Error en loginUser:", error);
     res.status(500).json({ message: "Error al iniciar sesión" });
   }
-};
-
-// ✅ Exporta correctamente todas las funciones
-module.exports = {
-  loginUser,
-  getAllUsers,
-  getUserById,
-  getUser,
-  updateUser,
-  deleteUserById,
-  updateUserById,
 };
 
 // Obtener todos los usuarios
@@ -154,4 +139,12 @@ exports.updateUserById = async (req, res) => {
   }
 };
 
-module.exports = { loginUser };
+module.exports = {
+  loginUser,
+  getAllUsers,
+  getUserById,
+  getUser,
+  updateUser,
+  deleteUserById,
+  updateUserById,
+};
