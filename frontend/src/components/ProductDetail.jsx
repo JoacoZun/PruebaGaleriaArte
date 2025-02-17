@@ -52,11 +52,11 @@ const ProductDetail = () => {
   }
 
   return (
-    <div className="min-view-height d-flex justify-content-center align-items-center gap-5">
-      <div>
+    <div className="product-detail-container">
+      <div className="product-detail-image-wrapper">
         <img className="product-detail-img" src={`${import.meta.env.VITE_API_URL}/${product.img_url}`} alt={product.title} />
       </div>
-      <div className="product-detail text-left">
+      <div className="product-detail-info">
         <h2 className="fs-2">{product.nombre}</h2>
         <h3 className="fs-5 text-secondary-emphasis">{product.autor}</h3>
         <div className="text-secondary">
@@ -74,6 +74,7 @@ const ProductDetail = () => {
       </div>
     </div>
   );
+  
 };
 
 export default ProductDetail;

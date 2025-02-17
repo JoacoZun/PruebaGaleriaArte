@@ -81,7 +81,7 @@ const LoginForm = () => {
 
         <div className="text-center">
           <button type="submit" className="btn btn-primary btn-block mb-4">
-            Ingresa
+            Ingresa.
           </button>
         </div>
       </form>
