@@ -57,7 +57,7 @@ const ObrasAdmin = () => {
   };
 
   const handleSave = async (newObra) => {
-    console.log("Datos enviados al backend:", newObra);
+    console.log("Datos enviados al backend:", newObra); // 📌 Verifica los datos
   
     if (!newObra.nombre || !newObra.autor || !newObra.precio) {
       alert("Todos los campos son obligatorios.");
@@ -65,11 +65,6 @@ const ObrasAdmin = () => {
     }
   
     newObra.precio = parseFloat(newObra.precio); // Asegurar que precio es número
-  
-    // Mantener la imagen actual si no se edita
-    if (obraEdit && !newObra.img_url) {
-      newObra.img_url = obraEdit.img_url;
-    }
   
     try {
       const response = await fetchWithAuth(
@@ -83,7 +78,7 @@ const ObrasAdmin = () => {
         }
       );
   
-      console.log("Respuesta del servidor:", response);
+      console.log("Respuesta del servidor:", response); // 📌 Verifica respuesta
       fetchObras();
       setObraEdit(null);
     } catch (err) {

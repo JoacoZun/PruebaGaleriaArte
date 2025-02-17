@@ -7,12 +7,14 @@ const userRoutes = require('./routes/userRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 
 // Middlewares
 app.use(express.json());
 app.use(cors());
+app.use(express.static(path.join(__dirname,'./public')));
 
 // Rutas
 app.use('/admin', adminRoutes);

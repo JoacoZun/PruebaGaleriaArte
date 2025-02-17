@@ -7,6 +7,7 @@ const RegisterForm = () => {
     email: '',
     password: '',
     password2: '',
+    direccion: '',
   };
 
   const [formData, setFormData] = useState(emptyForm);
@@ -25,20 +26,26 @@ const RegisterForm = () => {
     setSuccess(null);
 
     // Validaciones del formulario
-    if (!formData.nombre || !formData.apellido || !formData.email || !formData.password || !formData.password2) {
-      setError("Todos los campos son necesarios.");
+    if (
+      !formData.nombre ||
+      !formData.apellido ||
+      !formData.email ||
+      !formData.password ||
+      !formData.password2
+    ) {
+      setError('Todos los campos son necesarios.');
       return;
     }
 
     if (formData.password !== formData.password2) {
-      setError("Las contraseñas no coinciden.");
+      setError('Las contraseñas no coinciden.');
       return;
     }
 
     setLoading(true); // Comienza la carga
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/users/register`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -46,16 +53,17 @@ const RegisterForm = () => {
           apellido: formData.apellido,
           email: formData.email,
           password: formData.password,
+          direccion: formData.direccion,
         }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Error en el registro");
+        throw new Error(data.message || 'Error en el registro');
       }
 
-      setSuccess("Usuario registrado exitosamente");
+      setSuccess('Usuario registrado exitosamente');
       setFormData(emptyForm); // Limpiar el formulario
     } catch (error) {
       setError(error.message);
@@ -75,31 +83,96 @@ const RegisterForm = () => {
         <div className="row mb-4">
           <div className="col">
             <div>
-              <input type="text" id="nombre" name="nombre" className="form-control" onChange={handleChange} value={formData.nombre} required />
-              <label className="form-label" htmlFor="nombre">Nombre</label>
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                className="form-control"
+                onChange={handleChange}
+                value={formData.nombre}
+                required
+              />
+              <label className="form-label" htmlFor="nombre">
+                Nombre
+              </label>
             </div>
           </div>
           <div className="col">
             <div>
-              <input type="text" id="apellido" name="apellido" className="form-control" onChange={handleChange} value={formData.apellido} required />
-              <label className="form-label" htmlFor="apellido">Apellido</label>
+              <input
+                type="text"
+                id="apellido"
+                name="apellido"
+                className="form-control"
+                onChange={handleChange}
+                value={formData.apellido}
+                required
+              />
+              <label className="form-label" htmlFor="apellido">
+                Apellido
+              </label>
             </div>
           </div>
         </div>
 
         <div className="mb-4">
-          <input type="email" id="email" name="email" className="form-control" onChange={handleChange} value={formData.email} required />
-          <label className="form-label" htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            className="form-control"
+            onChange={handleChange}
+            value={formData.email}
+            required
+          />
+          <label className="form-label" htmlFor="email">
+            Email
+          </label>
         </div>
 
         <div className="mb-4">
-          <input type="password" id="password" name="password" className="form-control" onChange={handleChange} value={formData.password} required />
-          <label className="form-label" htmlFor="password">Contraseña</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            className="form-control"
+            onChange={handleChange}
+            value={formData.password}
+            required
+          />
+          <label className="form-label" htmlFor="password">
+            Contraseña
+          </label>
         </div>
 
         <div className="mb-4">
-          <input type="password" id="password2" name="password2" className="form-control" onChange={handleChange} value={formData.password2} required />
-          <label className="form-label" htmlFor="password2">Repita contraseña</label>
+          <input
+            type="password"
+            id="password2"
+            name="password2"
+            className="form-control"
+            onChange={handleChange}
+            value={formData.password2}
+            required
+          />
+          <label className="form-label" htmlFor="password2">
+            Repita contraseña
+          </label>
+        </div>
+
+        <div className="mb-4">
+          <input
+            type="text"
+            id="direccion"
+            name="direccion"
+            className="form-control"
+            onChange={handleChange}
+            value={formData.direccion}
+            required
+          />
+          <label className="form-label" htmlFor="direccion">
+            Dirección para envíos
+          </label>
         </div>
 
         <div className="text-center">
