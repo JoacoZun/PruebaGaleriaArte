@@ -53,23 +53,23 @@ const ProductDetail = () => {
 
   return (
     <div className="min-view-height d-flex justify-content-center align-items-center gap-5">
-      <div>
+      <div className="product-detail">
         <img className="product-detail-img" src={product.img_url} alt={product.title} />
-      </div>
-      <div className="product-detail text-left">
-        <h2 className="fs-2">{product.nombre}</h2>
-        <h3 className="fs-5 text-secondary-emphasis">{product.autor}</h3>
-        <div className="text-secondary">
-          <p className="m-0">{product.categoria}</p>
-          <p className="m-0">{product.tecnica}</p>
-          <p className="m-0">{product.alto} x {product.ancho} cm</p>
-        </div>
-        <p className="fw-bold my-3 fs-3">${product.precio}</p>
-        <p>{product.descripcion}</p>
-        <div className="d-grid">
-          <button onClick={handleAddToCart} className="btn btn-primary fs-5 rounded-0 py-3">
-            Comprar
-          </button>
+        <div className="product-detail-text">
+          <h2>{product.nombre}</h2>
+          <h3 className="text-secondary-emphasis">{product.autor}</h3>
+          <div className="text-secondary">
+            <p>{product.categoria}</p>
+            <p>{product.tecnica}</p>
+            <p>{product.alto} x {product.ancho} cm</p>
+          </div>
+          <p className="price">${product.precio}</p>
+          <p>{product.descripcion}</p>
+          <div className="d-grid">
+            <button onClick={handleAddToCart} className="btn btn-primary fs-5 rounded-0 py-3">
+              Comprar
+            </button>
+          </div>
         </div>
       </div>
     </div>
